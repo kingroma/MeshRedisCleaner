@@ -1,0 +1,13 @@
+# java -jar MeshRedisCleaner.jar [서버 이름] [레디스 IP]
+
+# 명령어 인식이 안될경우 
+$sed -i -e 's/\r$//' start.sh
+
+# local
+# java -jar MeshRedisCleaner.jar SBVC0-MsgRelay1 127.0.0.1
+
+# dev
+# java -jar MeshRedisCleaner.jar SBVC0-MsgRelay2 10.11.7.34
+
+# live
+# java -jar MeshRedisCleaner.jar SBVCP-MsgRelay1 10.11.6.49
