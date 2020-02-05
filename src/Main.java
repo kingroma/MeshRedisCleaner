@@ -11,6 +11,11 @@ import redis.clients.jedis.ScanResult;
 // java -jar MeshRedisCleaner.jar SBVC0-MsgRelay1 127.0.0.1
 public class Main {
 	public static void main(String[] args) {
+		// args = new String[2];
+		// args[0] = "SBVCP-MsgRelay4";
+		// args[1] = "127.0.0.1";
+		// 2147483647 
+		int MAX = 1000000; 
 		try {
 			if ( args != null && args.length == 2 
 					&& args[0] != null && !args[0].isEmpty()
@@ -24,7 +29,7 @@ public class Main {
 				System.out.println("Cleaner Start [ " + redisIp + " / " + serverName + " ] ");
 				
 				JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-		        JedisPool pool = new JedisPool(jedisPoolConfig, redisIp , redisPort, 1000, null);
+		        JedisPool pool = new JedisPool(jedisPoolConfig, redisIp , redisPort, 10000, null);
 		        Jedis jedis = pool.getResource();
 		        
 		        String hashKey = "conn:xmpp:" + serverName ;
@@ -35,7 +40,7 @@ public class Main {
 		        System.out.println("sadd > " + serverName);
 		        jedis.sadd(serverListKey, serverName);
 		        
-		        ScanParams scanParams = new ScanParams().count(10).match("conn:xmpp:devices:*");
+		        ScanParams scanParams = new ScanParams().count(MAX).match("conn:xmpp:devices:*");
 		        String cur = redis.clients.jedis.ScanParams.SCAN_POINTER_START;
 		        int count = 0 ;
 		        do {
